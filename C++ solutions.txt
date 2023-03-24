@@ -1,0 +1,144 @@
+231.
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        for(int i=0;i<n;i++)
+        {
+          if(pow(2,i)==n)
+          {
+            return true;
+          break;
+        }
+        }
+        return false;
+    }
+};
+
+190.
+class Solution {
+public:
+    uint32_t reverseBits(uint32_t n) {
+        uint32_t ans = 0;
+
+    for (int i = 0; i < 32; ++i)
+      if (n >> i & 1)
+        ans |= 1 << 31 - i;
+
+    return ans;
+    }
+};
+
+136.
+class Solution {
+ public:
+  vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+    const int m = mat.size();
+    const int n = mat[0].size();
+    const vector<int> dirs{0, 1, 0, -1, 0};
+    queue<pair<int, int>> q;
+    vector<vector<bool>> seen(m, vector<bool>(n));
+
+    for (int i = 0; i < m; ++i)
+      for (int j = 0; j < n; ++j)
+        if (mat[i][j] == 0) {
+          q.emplace(i, j);
+          seen[i][j] = true;
+        }
+
+    while (!q.empty()) {
+      const auto [i, j] = q.front();
+      q.pop();
+      for (int k = 0; k < 4; ++k) {
+        const int x = i + dirs[k];
+        const int y = j + dirs[k + 1];
+        if (x < 0 || x == m || y < 0 || y == n)
+          continue;
+        if (seen[x][y])
+          continue;
+        mat[x][y] = mat[i][j] + 1;
+        q.emplace(x, y);
+        seen[x][y] = true;
+      }
+    }
+
+    return mat;
+  }
+};
+
+21.
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        ListNode* p1=list1;
+         ListNode* p2=list2;
+        ListNode* dummyNode= new ListNode(-1);
+         ListNode* p3=dummyNode;
+         while(p1!=NULL && p2!=NULL)
+         {
+             if(p1->val < p2->val)
+             {
+             p3->next=p1;
+             p1=p1->next;
+             }
+             else
+             {
+                 p3->next=p2;
+                 p2=p2->next;
+            }
+         
+             p3=p3->next;
+         }
+             if(p1!=NULL)
+             {
+                 p3->next=p1;
+                
+             }
+         
+              if(p2!=NULL)
+             {
+                 p3->next=p2;
+               
+             }
+         
+         return dummyNode->next;
+    }
+};
+
+206.
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head->next)
+      return head;
+
+    ListNode* newHead = reverseList(head->next);
+    head->next->next = head;
+    head->next = nullptr;
+    return newHead;
+        
+    }
+};
+
+70.
+class Solution {
+public:
+    int climbStairs(int n) {
+        vector <int> dp(n+1);
+        dp[0]=1;
+        dp[1]=1;
+        for(int i=2;i<=n;++i)
+        dp[i]=dp[i-1]+dp[i-2];
+        return dp[n];
+    }
+};
+
